@@ -1,0 +1,17 @@
+Transformer architecture
+Generatively pre-trained Transformer (GPT) – Transformer algorithm
+
+Google uses sentencepiece
+https://github.com/google/sentencepiece
+
+OpenAI uses tiktoken
+https://github.com/openai/tiktoken
+
+We can have very long sequences of integers with very small vocabularies
+Or
+We can have short sequences of integers with very large vocabularies
+
+
+We never feed the entire text into the Transformer all at once; that would
+be computationally very demanding. We actually train a Transformer with 
+chunks of the data set.
