@@ -38,6 +38,10 @@ y = train_data[1:block_size+1]
 for t in range(block_size):
     context = x[:t+1]
     target = y[t]
+    print(f"When input is {context} then target is {target}")
 
 
-print(list(range(5)))
+torch.manual_seed(1337)
+batch_size = 4 # number of independent sequences to be processed in parallel
+block_size = 8 # maximum content length for predictions
+
