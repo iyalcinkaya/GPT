@@ -49,6 +49,16 @@ print(yb)
 
 print('-------------------')
 
+class BigramLanguageModel(nn.Module):
+    def __init__(self, vocab_size):
+        super().__init__()
+        self.token_embedding_table = nn.Embedding(vocab_size, vocab_size)
+    def forward(self, idx, targets):
+        logits = self.tokes_embedding_table(idx)
+        return logits
+    
+m = BigramLanguageModel(vocab_size)
+out = m(xb, yb)
 
 # -----------------------------------------------
 # print("Length of dataset in characters: ", len(corpus))
