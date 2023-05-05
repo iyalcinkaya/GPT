@@ -54,11 +54,18 @@ class BigramLanguageModel(nn.Module):
         super().__init__()
         self.token_embedding_table = nn.Embedding(vocab_size, vocab_size)
     def forward(self, idx, targets):
-        logits = self.tokes_embedding_table(idx)
-        return logits
+        logits = self.token_embedding_table(idx)
+        B, T, C = logits.shape
+        logits = logits.view(B*T, C)
+        targets = targets.view(B*T)
+        loss = F.cross_entropy(logits, targets)
+        return logits, loss
     
 m = BigramLanguageModel(vocab_size)
-out = m(xb, yb)
+logits, loss = m(xb, yb)
+print(logits.shape)
+print(loss)
+
 
 # -----------------------------------------------
 # print("Length of dataset in characters: ", len(corpus))
