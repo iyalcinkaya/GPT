@@ -23,6 +23,7 @@ with open('input.txt', 'r' , encoding = 'utf-8') as f:
     # sorted() takes a list or set and returns a new sorted list.
 chars = sorted(list(set(corpus)))
 vocab_size = len(chars)
+
 # Create a dictionary that maps each character to an integer
 ctoi = { c:i for i, c in enumerate(chars) }          # creates dictionary char to integer
 itoc = { i:c for i, c in enumerate(chars) }          # creats dictionary integer to char
@@ -64,39 +65,18 @@ class BigramLanguageModel(nn.Module):
             loss = F.cross_entropy(logits, targets)
         return logits, loss
     
-    def generate (self, idx, max_new_tokens) :
-        # idx is (B, T) array of indices in the current context
-        for in range (max_new_tokens) :
-        # get the predictions
-        logits, loss = self(idx)
-        # focus only on the last time step
-        logits = logits[:, -1, :] # becomes (B, C)
-        # apply softmax to get probabilities
-probs = F.softmax(logits, dim=-1) # (B, C)
-# sample from the distribution
-id_next = torch. multinomial (probs, num_samples=1) # (B, 1)
-# append sampled index to the running sequence
-idx = torch. cat((idx, idx_next), dim=1) # (B, T+1)
-    
-xb , yb = get_batch('train')
-m = BigramLanguageModel(vocab_size)
-logits, loss = m(xb, yb)
-print(logits.shape)
-print(loss)
+    def generate(self, idx, max_new_tokens):                   # idx is the (B, T) array of indices of the context
+        for _ in range(max_new_tokens):                        # Repeat max_new_tokens times
+            logits, loss = self(idx)                           # Get the predictions for the context
+            logits = logits[:, -1, :]                          # Get the last prediction for each sequence in the batch
+            probs = F.softmax(logits, dim=-1)                  # Convert the logits to probabilities (B, C)
+            idx_next = torch.multinomial(probs, num_samples=1) # Sample from the distribution (B, 1)
+            idx = torch.cat((idx, idx_next), dim=1)            # Concatenate the new indices to the context (B, T+1)
+        return idx
 
 
-
-
-
-
-  
-
-
-
-
-
-
-
+model = BigramLanguageModel(vocab_size) # creates the model
+m = model.to(device)                    # moves the model to the device (if cuda is available, it will be used)
 
 
     

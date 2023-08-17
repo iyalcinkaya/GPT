@@ -57,7 +57,7 @@ class BigramLanguageModel(nn.Module):
     def forward(self, idx, targets = None):
         logits = self.token_embedding_table(idx)
 
-        if targets is None:
+        if targets is None: 
             loss = None
         else:
             B, T, C = logits.shape
@@ -113,7 +113,7 @@ for steps in range(10000):
 print(loss.item())
 
 idx = torch.zeros((1, 1), dtype=torch.long)
-print(decode(m.generate(idx=idx, max_new_tokens=500)[0].tolist()))
+print(decode(m.generate(idx=idx, max_new_tokens=2000)[0].tolist()))
 
 
 
@@ -135,3 +135,4 @@ print(decode(m.generate(idx=idx, max_new_tokens=500)[0].tolist()))
 #     context = x[:t+1]
 #     target = y[t]
 #     print(f"When input is {context} then target is {target}")
+

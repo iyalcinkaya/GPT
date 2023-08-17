@@ -15,3 +15,14 @@ We can have short sequences of integers with very large vocabularies
 We never feed the entire text into the Transformer all at once; that would
 be computationally very demanding. We actually train a Transformer with 
 chunks of the data set.
+
+
+pip install -r requrirements.txt (better note the versions of the libraries that we used while developing the code)
+For example pygame==1.0.0
+$env:PATH ---> For powershell
+
+.\venvName\Scripts\activate
+deactivate
+
+When a virtual environment is activated, the activate Script adds the path of the venv folder into system PATH.
+
